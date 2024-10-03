@@ -1,38 +1,29 @@
-var countdown = document.getElementById('countdown') 
+// Get the countdown element
+var countdown = document.getElementById('countdown');
 
-var myDate = '2020-12-25'
-var t = Date.parse(myDate) - Date.parse(new Date());
-var seconds = Math.floor( (t/1000) % 60 );
-var minutes = Math.floor( (t/1000/60) % 60 );
-var hours = Math.floor( (t/(1000*60*60)) % 24 );
-var days = Math.floor( t/(1000*60*60*24) );
-var hours = Math.floor( (t/(1000*60*60)) % 24 );
-var min = Math.floor( (t/1000/60) % 60 );
-var sec = Math.floor( (t/1000) % 60 );
+// Function to update the countdown
+function updateCountdown() {
+    var christmasDate = new Date('2024-12-25');  // Set Christmas date for this year
+    var now = new Date();  // Get the current date and time
+    var t = christmasDate - now;  // Calculate the time difference in milliseconds
 
-countdown.innerHTML = `${days}d , ${hours}hr , ${min}min , ${sec}sec `
+    if (t >= 0) {
+        // Time calculations for days, hours, minutes, and seconds
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        var minutes = Math.floor((t / 1000 / 60) % 60);
+        var seconds = Math.floor((t / 1000) % 60);
 
-
-window.setInterval(() => {
-    if (sec == 0) {
-        min = min - 1
-        sec = 60
+        // Update the countdown display
+        countdown.innerHTML = `${days}d, ${hours}hr, ${minutes}min, ${seconds}sec`;
+    } else {
+        // When Christmas has passed, show 0 for all units
+        countdown.innerHTML = `0d, 0hr, 0min, 0sec`;
     }
-    if (min == 0) {
-        hours = hours - 1
-        min = 60
-    }
-    if (hours == 0) {
-        days = days - 1
-        hours = 24
-    }
-    if(days == 0) {
-        days = 0
-        hours = 0
-        min = 0
-        sex = 0
-    }
+}
 
-        sec = sec -1 
-    countdown.innerHTML = `${days}d , ${hours}hr , ${min}min , ${sec}sec`
-}, 1000);
+// Update countdown every second
+setInterval(updateCountdown, 1000);
+
+// Initial call to display countdown immediately when page loads
+updateCountdown();
